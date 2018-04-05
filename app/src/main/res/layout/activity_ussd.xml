@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <TextView
+            android:id="@+id/ussd_textview_response"
+            android:visibility="invisible"
+            android:layout_width="360dp"
+            android:layout_height="256dp"
+            android:textSize="14sp"
+            android:text="Response Here" />
+        <EditText
+            android:id="@+id/ussd_editview_request"
+            android:visibility="invisible"
+            android:layout_width="360dp"
+            android:layout_height="64dp"
+            android:textSize="14sp"
+            android:layout_marginTop="18dp"
+            android:hint="Enter response here" />
+        <Button
+            android:id="@+id/ussd_button_send"
+            android:visibility="invisible"
+            android:text="@string/ussd_button_label_send"
+            android:layout_marginTop="18dp"
+            android:layout_width="360dp"
+            android:layout_height="64dp" />
+        <Button
+            android:id="@+id/ussd_button_refresh"
+            android:visibility="invisible"
+            android:text="@string/ussd_button_label_refresh"
+            android:layout_marginTop="18dp"
+            android:layout_width="360dp"
+            android:layout_height="64dp" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
