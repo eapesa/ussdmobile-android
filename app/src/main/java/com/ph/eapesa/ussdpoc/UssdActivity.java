@@ -16,20 +16,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 /**
  * Created by elixa.pesa on 03/04/2018.
  */
 
 public class UssdActivity extends AppCompatActivity implements View.OnClickListener {
-
     private String TAG = UssdActivity.class.getSimpleName();
+
+    private int REQUEST_CODE_PERMISSION = 500;
+
     private TextView textViewResponse;
     private EditText editTextRequest;
     private Button buttonSend;
     private Button buttonRefresh;
 
-    private int REQUEST_CODE_PERMISSION = 500;
-    private final String ussdNum = "*121*4*1#";
+//    private final String ussdNum = "*121*4*1#";
+    private final String ussdNum = "*118*07#";
+
+    private UssdSender ussdSender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +44,9 @@ public class UssdActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_ussd);
 
         initializeLayout();
-        initializeUssd();
 
+        ussdSender = new UssdSender(this);
+        initializeUssd();
     }
 
     @Override
@@ -53,6 +61,9 @@ public class UssdActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.ussd_button_send:
                 Log.d(TAG, "Send button clicked.");
+                String query = editTextRequest.getText().toString();
+                Log.d(TAG, "EDIT TEXT: " + query);
+                sendUssd("custom", query);
                 break;
             case R.id.ussd_button_refresh:
                 Log.d(TAG, "Refresh button clicked.");
@@ -73,47 +84,8 @@ public class UssdActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initializeUssd() {
-        TelephonyManager ussdManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-        Log.d(TAG, "Contacting USSD number: " + ussdNum);
-
-        if (ActivityCompat.checkSelfPermission(UssdActivity.this, Manifest.permission.CALL_PHONE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(UssdActivity.this,
-                    new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CODE_PERMISSION);
-            return;
-        }
-
-        ussdManager.sendUssdRequest(ussdNum, new TelephonyManager.UssdResponseCallback() {
-            @Override
-            public void onReceiveUssdResponse(TelephonyManager telephonyManager, String request, CharSequence response) {
-                Log.d(TAG, "[SUCCESS] REQUEST: " + request);
-                Log.d(TAG, "[SUCCESS] RESPONSE: " + response.toString());
-
-                // TODO: Show result in responseTextView and make edittext and button visible
-                refreshVisibility("onSuccess", View.VISIBLE);
-                textViewResponse.setText(response);
-
-                super.onReceiveUssdResponse(telephonyManager, request, response);
-            }
-
-            @Override
-            public void onReceiveUssdResponseFailed(TelephonyManager telephonyManager, String request, int failureCode) {
-                Log.d(TAG, "[FAILED] REQUEST: " + request);
-                Log.d(TAG, "[FAILED] RESPONSE: " + String.valueOf(failureCode));
-
-                // TODO: Show error result in textView
-                refreshVisibility("onFailed", View.VISIBLE);
-                textViewResponse.setText(translateUssdError(failureCode));
-
-                super.onReceiveUssdResponseFailed(telephonyManager, request, failureCode);
-            }
-        }, new Handler(new Handler.Callback() {
-            @Override
-            public boolean handleMessage(Message msg) {
-                Log.d(TAG, "NOTE: Check for what is this handler...");
-                return true;
-            }
-        }));
+        String ussdString = new String("*118*07#");
+        sendUssd("init", ussdString);
     }
 
     private String translateUssdError(int errorCode) {
@@ -153,5 +125,47 @@ public class UssdActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             return View.VISIBLE;
         }
+    }
+
+    private String multiplyString(String text, int count) {
+        String textAll = "";
+        for (int i = 0; i < count; i++) {
+            textAll += text;
+        }
+        return textAll;
+    }
+
+    private void sendUssd(String type, String text) {
+        final String TYPE = type;
+        ussdSender.sendUssd(text, new UssdSender.Listener() {
+            @Override
+            public void onRequirePermission() {
+                ActivityCompat.requestPermissions(UssdActivity.this,
+                        new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CODE_PERMISSION);
+                return;
+            }
+
+            @Override
+            public void onSuccess(String response) {
+                Log.d(TAG, "[SUCCESS] RESPONSE: " + response.toString());
+                // TODO: Show result in responseTextView and make edittext and button visible
+                refreshVisibility("onSuccess", View.VISIBLE);
+                textViewResponse.setText(response);
+            }
+
+            @Override
+            public void onError(int failureCode) {
+                Log.d(TAG, "[FAILED] RESPONSE: " + String.valueOf(failureCode));
+                // TODO: Show error result in textView
+
+                if (TYPE == "init") {
+                    refreshVisibility("onSuccess", View.VISIBLE);
+                    textViewResponse.setText("INITIALIZATION SUCCESSFUL!");
+                } else {
+                    refreshVisibility("onFailed", View.VISIBLE);
+                    textViewResponse.setText(translateUssdError(failureCode));
+                }
+            }
+        });
     }
 }
