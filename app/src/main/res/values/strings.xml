@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">USSD POC</string>
     <string name="main_button_label_sync">Sync</string>
-    <string name="ussd_button_label_send">Send</string>
-    <string name="ussd_button_label_refresh">Refresh</string>
+    <string name="ussd_button_label_custom">SEND CUSTOM</string>
+    <string name="ussd_button_label_03">SEND *118*03#</string>
+    <string name="ussd_button_label_07">SEND *118*07#</string>
+    <string name="ussd_button_label_counted">SEND COUNTED</string>
+    <string name="ussd_button_label_refresh">CLEAR</string>
 </resources>

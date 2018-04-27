@@ -1,12 +1,7 @@
 package com.ph.eapesa.ussdpoc;
 
 import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
@@ -15,9 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 /**
  * Created by elixa.pesa on 03/04/2018.
@@ -30,11 +22,11 @@ public class UssdActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView textViewResponse;
     private EditText editTextRequest;
-    private Button buttonSend;
+    private Button buttonSendCustom;
+    private Button buttonSend03;
+    private Button buttonSend07;
+    private Button buttonCounted;
     private Button buttonRefresh;
-
-//    private final String ussdNum = "*121*4*1#";
-    private final String ussdNum = "*118*07#";
 
     private UssdSender ussdSender;
 
@@ -42,11 +34,8 @@ public class UssdActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ussd);
-
         initializeLayout();
-
         ussdSender = new UssdSender(this);
-        initializeUssd();
     }
 
     @Override
@@ -58,17 +47,34 @@ public class UssdActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        String ussdPrefix03 = new String("*118*03#");
+        String ussdPrefix07 = new String("*118*07#");
         switch (view.getId()) {
-            case R.id.ussd_button_send:
-                Log.d(TAG, "Send button clicked.");
+            case R.id.ussd_button_03:
+                Log.d(TAG,"CLICKED 03");
+                clearEditText();
+                sendUssd(ussdPrefix03);
+                break;
+            case R.id.ussd_button_07:
+                Log.d(TAG, "CLICKED 07");
+                clearEditText();
+                sendUssd(ussdPrefix07);
+                break;
+            case R.id.ussd_button_counted:
+                Log.d(TAG, "CLICKED MEASURED TEXT");
+                int count = Integer.parseInt(editTextRequest.getText().toString());
+                String measuredQuery = countedString(count);
+                textViewResponse.setText("SENT (" + count +" chars): " + measuredQuery);
+                sendUssd(measuredQuery);
+                break;
+            case R.id.ussd_button_custom:
+                Log.d(TAG, "CLICKED CUSTOM");
                 String query = editTextRequest.getText().toString();
-                Log.d(TAG, "EDIT TEXT: " + query);
-                sendUssd("custom", query);
+                sendUssd(query);
                 break;
             case R.id.ussd_button_refresh:
                 Log.d(TAG, "Refresh button clicked.");
-                refreshVisibility("onLoading", View.INVISIBLE);
-                initializeUssd();
+                clearEditText();
                 break;
         }
     }
@@ -76,17 +82,19 @@ public class UssdActivity extends AppCompatActivity implements View.OnClickListe
     private void initializeLayout() {
         textViewResponse = (TextView) findViewById(R.id.ussd_textview_response);
         editTextRequest = (EditText) findViewById(R.id.ussd_editview_request);
-        buttonSend = (Button) findViewById(R.id.ussd_button_send);
+        buttonSend03 = (Button) findViewById(R.id.ussd_button_03);
+        buttonSend07 = (Button) findViewById(R.id.ussd_button_07);
+        buttonSendCustom = (Button) findViewById(R.id.ussd_button_custom);
         buttonRefresh = (Button) findViewById(R.id.ussd_button_refresh);
+        buttonCounted = (Button) findViewById(R.id.ussd_button_counted);
 
-        buttonSend.setOnClickListener(this);
+        buttonSend03.setOnClickListener(this);
+        buttonSend07.setOnClickListener(this);
+        buttonSendCustom.setOnClickListener(this);
         buttonRefresh.setOnClickListener(this);
+        buttonCounted.setOnClickListener(this);
     }
 
-    private void initializeUssd() {
-        String ussdString = new String("*118*07#");
-        sendUssd("init", ussdString);
-    }
 
     private String translateUssdError(int errorCode) {
         if (errorCode == TelephonyManager.USSD_RETURN_FAILURE) {
@@ -98,33 +106,8 @@ public class UssdActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void refreshVisibility(String type, int visibility) {
-        if (type == "onSuccess") {
-            textViewResponse.setVisibility(visibility);
-            editTextRequest.setVisibility(visibility);
-            buttonSend.setVisibility(visibility);
-            // NOTE: below should be hidden on success
-            buttonRefresh.setVisibility(negateVisibility(visibility));
-        } else if (type == "onFailed") {
-            textViewResponse.setVisibility(visibility);
-            buttonRefresh.setVisibility(visibility);
-            // NOTE: below should be hidden on failed
-            editTextRequest.setVisibility(negateVisibility(visibility));
-            buttonSend.setVisibility(negateVisibility(visibility));
-        } else {
-            textViewResponse.setVisibility(visibility);
-            editTextRequest.setVisibility(visibility);
-            buttonSend.setVisibility(visibility);
-            buttonRefresh.setVisibility(visibility);
-        }
-    }
-
-    private int negateVisibility(int visibility) {
-        if (visibility == View.VISIBLE) {
-            return View.INVISIBLE;
-        } else {
-            return View.VISIBLE;
-        }
+    private void clearEditText() {
+        textViewResponse.setText("");
     }
 
     private String multiplyString(String text, int count) {
@@ -135,8 +118,24 @@ public class UssdActivity extends AppCompatActivity implements View.OnClickListe
         return textAll;
     }
 
-    private void sendUssd(String type, String text) {
-        final String TYPE = type;
+    private String countedString(int count) {
+        String textAll = "";
+        String baseChars = "0123456789";
+        int tens = count / 10;
+        int excess = count % 10;
+
+        for (int i = 0; i < tens; i++) {
+            textAll += baseChars;
+        }
+
+        for (int j = 0; j < excess; j++) {
+            textAll += String.valueOf(j);
+        }
+
+        return new String("*118*07*" + textAll + "#");
+    }
+
+    private void sendUssd(String text) {
         ussdSender.sendUssd(text, new UssdSender.Listener() {
             @Override
             public void onRequirePermission() {
@@ -149,22 +148,14 @@ public class UssdActivity extends AppCompatActivity implements View.OnClickListe
             public void onSuccess(String response) {
                 Log.d(TAG, "[SUCCESS] RESPONSE: " + response.toString());
                 // TODO: Show result in responseTextView and make edittext and button visible
-                refreshVisibility("onSuccess", View.VISIBLE);
-                textViewResponse.setText(response);
+                textViewResponse.setText(response.toString());
             }
 
             @Override
             public void onError(int failureCode) {
                 Log.d(TAG, "[FAILED] RESPONSE: " + String.valueOf(failureCode));
                 // TODO: Show error result in textView
-
-                if (TYPE == "init") {
-                    refreshVisibility("onSuccess", View.VISIBLE);
-                    textViewResponse.setText("INITIALIZATION SUCCESSFUL!");
-                } else {
-                    refreshVisibility("onFailed", View.VISIBLE);
-                    textViewResponse.setText(translateUssdError(failureCode));
-                }
+                textViewResponse.setText(translateUssdError(failureCode));
             }
         });
     }

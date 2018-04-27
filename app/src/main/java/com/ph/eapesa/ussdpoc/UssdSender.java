@@ -23,7 +23,7 @@ public class UssdSender {
 
     private Context context;
 
-    public UssdSender(Context context) {
+    public UssdSender(final Context context) {
         this.context = context;
         ussdManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
     }
@@ -35,7 +35,10 @@ public class UssdSender {
     }
 
     public void sendUssd(String text, final Listener listener) {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+        boolean isGranted = (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE)
+                == PackageManager.PERMISSION_GRANTED);
+        Log.d(TAG, "[PERMISSION] GRANTED? " + isGranted);
+        if (isGranted) {
             ussdManager.sendUssdRequest(text, new TelephonyManager.UssdResponseCallback() {
                 @Override
                 public void onReceiveUssdResponse(TelephonyManager telephonyManager, String request, CharSequence response) {
