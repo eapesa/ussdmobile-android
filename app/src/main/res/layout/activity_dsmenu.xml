@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Button
+        style="?android:attr/borderlessButtonStyle"
+        android:id="@+id/dsmenu_button_1"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="40dp"
+
+        android:text="@string/dsmenu_menulist_label_1"
+        android:textSize="20sp"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"></Button>
+
+    <View
+        android:id="@+id/dsmenu_separator_1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+
+        app:layout_constraintTop_toBottomOf="@+id/dsmenu_button_1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        style="?android:attr/borderlessButtonStyle"
+        android:id="@+id/dsmenu_button_2"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+
+        android:text="@string/dsmenu_menulist_label_2"
+        android:textSize="20sp"
+
+        app:layout_constraintTop_toBottomOf="@+id/dsmenu_separator_1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+    </Button>
+
+    <LinearLayout
+        android:id="@+id/dsmenu_button2_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/dsmenu_button_2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <Button
+            android:id="@+id/dsmenu_button_2_1"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+
+            android:text="@string/dsmenu_menulist_label_2_1"
+            android:textSize="16sp"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></Button>
+
+        <Button
+            android:id="@+id/dsmenu_button_2_2"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+
+            android:text="@string/dsmenu_menulist_label_2_2"
+            android:textSize="16sp"
+
+            app:layout_constraintTop_toBottomOf="@+id/dsmenu_button_2_1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"></Button>
+
+        <LinearLayout
+            android:id="@+id/dsmenu_button2sub1_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/dsmenu_button_2_2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <Button
+                android:id="@+id/dsmenu_button_2_2_1"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+
+                android:text="@string/dsmenu_menulist_label_2_2_1"
+                android:textSize="12sp"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></Button>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/dsmenu_separator_2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+
+        app:layout_constraintTop_toBottomOf="@+id/dsmenu_button2_group"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        style="?android:attr/borderlessButtonStyle"
+        android:id="@+id/dsmenu_button_3"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+
+        android:text="@string/dsmenu_menulist_label_3"
+        android:textSize="20sp"
+
+        app:layout_constraintTop_toBottomOf="@+id/dsmenu_separator_2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"></Button>
+
+    <LinearLayout
+        android:id="@+id/dsmenu_button3_group"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+
+        app:layout_constraintTop_toBottomOf="@+id/dsmenu_button_3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+        <Button
+            style="?android:attr/borderlessButtonStyle"
+            android:id="@+id/dsmenu_button_3_1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+
+            android:text="@string/dsmenu_menulist_label_3_1"
+            android:textSize="16sp"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+        </Button>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/dsmenu_separator_3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+
+        app:layout_constraintTop_toBottomOf="@+id/dsmenu_button3_group"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/dsmenu_textview_result"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="40dp"
+
+        android:textSize="20sp"
+
+        app:layout_constraintTop_toBottomOf="@+id/dsmenu_separator_3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+
+</android.support.constraint.ConstraintLayout>

@@ -18,7 +18,7 @@ import android.widget.TextView;
 public class UssdActivity extends AppCompatActivity implements View.OnClickListener {
     private String TAG = UssdActivity.class.getSimpleName();
 
-    private int REQUEST_CODE_PERMISSION = 500;
+    private final int REQUEST_CODE_PERMISSION = 500;
 
     private TextView textViewResponse;
     private EditText editTextRequest;

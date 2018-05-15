@@ -5,44 +5,57 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String TAG = MainActivity.class.getSimpleName();
     private Button buttonSync;
-//    private KeyPairGenerator keyPairGenerator;
+    private Button buttonOriginal;
+    private Button buttonDynamicMenu;
+    private Button buttonDsMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        generateKeys();
+        buttonOriginal = (Button) findViewById(R.id.main_button_original);
+        buttonDynamicMenu = (Button) findViewById(R.id.main_button_dynamicmenu);
+        buttonDsMenu = (Button) findViewById(R.id.main_button_dsmenu);
 
-        buttonSync = (Button) findViewById(R.id.main_button_sync);
-        buttonSync.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    Intent ussdIntent = new Intent(MainActivity.this, UssdActivity.class);
-                    startActivity(ussdIntent);
-                } else {
-                    CharSequence invalidSdkVersion = "Your SDK version is below the required.";
-                    Context context = getApplicationContext();
-                    Toast errorToast = Toast.makeText(context, invalidSdkVersion, Toast.LENGTH_SHORT);
-                    errorToast.show();
-                }
-            }
-        });
+        buttonOriginal.setOnClickListener(this);
+        buttonDynamicMenu.setOnClickListener(this);
+        buttonDsMenu.setOnClickListener(this);
     }
 
 
+    @Override
+    public void onClick(View v) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            switch (v.getId()) {
+                case R.id.main_button_original:
+                    Intent originalIntent = new Intent(MainActivity.this, UssdActivity.class);
+                    startActivity(originalIntent);
+                    break;
+                case R.id.main_button_dynamicmenu:
+                    Intent dynamicMenuIntent = new Intent(MainActivity.this, DynamicMenuActivity.class);
+                    startActivity(dynamicMenuIntent);
+                    break;
+                case R.id.main_button_dsmenu:
+                    Intent dsMenuIntent = new Intent(MainActivity.this, DialstringMenuActivity.class);
+                    startActivity(dsMenuIntent);
+                    break;
+            }
+        } else {
+            CharSequence invalidSdkVersion = "Your SDK version is below the required.";
+            Toast errorToast = Toast.makeText(getApplicationContext(), invalidSdkVersion,
+                    Toast.LENGTH_SHORT);
+            errorToast.show();
+        }
+    }
 }

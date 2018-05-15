@@ -1,9 +1,22 @@
 <resources>
     <string name="app_name">USSD POC</string>
-    <string name="main_button_label_sync">Sync</string>
+
+    <string name="main_button_label_poc">Original POC Implementation</string>
+    <string name="main_button_label_dsmenu">Dialstring Menus</string>
+    <string name="main_button_label_dynamicmenu">Dynamic Menu</string>
+
     <string name="ussd_button_label_custom">SEND CUSTOM</string>
     <string name="ussd_button_label_03">SEND *118*03#</string>
     <string name="ussd_button_label_07">SEND *118*07#</string>
     <string name="ussd_button_label_counted">SEND COUNTED</string>
     <string name="ussd_button_label_refresh">CLEAR</string>
+
+    <string name="dsmenu_menulist_label_1">Menu I</string>
+    <string name="dsmenu_menulist_label_2">Menu II</string>
+    <string name="dsmenu_menulist_label_3">Menu III</string>
+    <string name="dsmenu_menulist_label_2_1">Menu II - A</string>
+    <string name="dsmenu_menulist_label_2_2">Menu II - B</string>
+    <string name="dsmenu_menulist_label_3_1">Menu III - A</string>
+    <string name="dsmenu_menulist_label_2_2_1">Menu II - A - i</string>
+    <string name="dsmenu_menulist_label_2_2_2">Menu II - A - ii</string>
 </resources>

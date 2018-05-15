@@ -23,6 +23,12 @@
         <activity
             android:name=".UssdActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".DialstringMenuActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".DynamicMenuActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
