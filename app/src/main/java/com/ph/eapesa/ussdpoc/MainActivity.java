@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String TAG = MainActivity.class.getSimpleName();
     private Button buttonSync;
     private Button buttonOriginal;
+    private Button buttonFixedMenu;
     private Button buttonDynamicMenu;
     private Button buttonDsMenu;
 
@@ -24,10 +25,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         buttonOriginal = (Button) findViewById(R.id.main_button_original);
+        buttonFixedMenu = (Button) findViewById(R.id.main_button_fixedmenu);
         buttonDynamicMenu = (Button) findViewById(R.id.main_button_dynamicmenu);
         buttonDsMenu = (Button) findViewById(R.id.main_button_dsmenu);
 
         buttonOriginal.setOnClickListener(this);
+        buttonFixedMenu.setOnClickListener(this);
         buttonDynamicMenu.setOnClickListener(this);
         buttonDsMenu.setOnClickListener(this);
     }
@@ -36,13 +39,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
             switch (v.getId()) {
                 case R.id.main_button_original:
+                    Log.d(TAG, "ORIGINAL");
                     Intent originalIntent = new Intent(MainActivity.this, UssdActivity.class);
                     startActivity(originalIntent);
                     break;
+                case R.id.main_button_fixedmenu:
+                    Log.d(TAG, "FIXED");
+                    Intent fixedMenuIntent = new Intent(MainActivity.this, FixedMenuActivity.class);
+                    startActivity(fixedMenuIntent);
+                    break;
                 case R.id.main_button_dynamicmenu:
+                    Log.d(TAG, "DYNAMIC");
                     Intent dynamicMenuIntent = new Intent(MainActivity.this, DynamicMenuActivity.class);
                     startActivity(dynamicMenuIntent);
                     break;

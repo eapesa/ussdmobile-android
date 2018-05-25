@@ -3,6 +3,7 @@
 
     <string name="main_button_label_poc">Original POC Implementation</string>
     <string name="main_button_label_dsmenu">Dialstring Menus</string>
+    <string name="main_button_label_fixedmenu">Fixed Menu</string>
     <string name="main_button_label_dynamicmenu">Dynamic Menu</string>
 
     <string name="ussd_button_label_custom">SEND CUSTOM</string>

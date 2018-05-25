@@ -27,6 +27,9 @@
             android:name=".DialstringMenuActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name=".FixedMenuActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name=".DynamicMenuActivity"
             android:screenOrientation="portrait"></activity>
     </application>
