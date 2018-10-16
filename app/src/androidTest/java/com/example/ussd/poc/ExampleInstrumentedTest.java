@@ -1,4 +1,4 @@
-package com.ph.eapesa.ussdpoc;
+package com.example.ussd.poc;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.ph.eapesa.ussdpoc", appContext.getPackageName());
+        assertEquals("com.ph.eapesa.poc", appContext.getPackageName());
     }
 }

@@ -1,4 +1,4 @@
-package com.ph.eapesa.ussdpoc;
+package com.example.ussd.poc;
 
 import org.junit.Test;
 

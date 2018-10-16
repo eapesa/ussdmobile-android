@@ -1,16 +1,13 @@
-package com.ph.eapesa.ussdpoc;
+package com.example.ussd.poc;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Message;
-import android.os.TestLooperManager;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.view.View;
 
 /**
  * Created by elixa.pesa on 17/04/2018.

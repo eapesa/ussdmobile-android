@@ -1,4 +1,4 @@
-package com.ph.eapesa.ussdpoc;
+package com.example.ussd.poc;
 
 import android.Manifest;
 import android.content.Context;
@@ -13,8 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by elixa.pesa on 15/05/2018.

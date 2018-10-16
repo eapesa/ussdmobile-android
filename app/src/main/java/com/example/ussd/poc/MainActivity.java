@@ -1,6 +1,5 @@
-package com.ph.eapesa.ussdpoc;
+package com.example.ussd.poc;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;

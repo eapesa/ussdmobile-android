@@ -35,18 +35,21 @@
             android:layout_width="360dp"
             android:layout_height="50dp" />
         <Button
+            android:visibility="gone"
             android:id="@+id/ussd_button_03"
             android:text="@string/ussd_button_label_03"
             android:layout_marginTop="12dp"
             android:layout_width="360dp"
             android:layout_height="50dp" />
         <Button
+            android:visibility="gone"
             android:id="@+id/ussd_button_07"
             android:text="@string/ussd_button_label_07"
             android:layout_marginTop="12dp"
             android:layout_width="360dp"
             android:layout_height="50dp" />
         <Button
+            android:visibility="gone"
             android:id="@+id/ussd_button_counted"
             android:text="@string/ussd_button_label_counted"
             android:layout_marginTop="12dp"

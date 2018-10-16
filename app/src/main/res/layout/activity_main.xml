@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ph.eapesa.ussdpoc.MainActivity">
+    tools:context="com.example.ussd.poc.MainActivity">
 
     <ImageView
         android:id="@+id/app_logo"
@@ -53,6 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
 
         android:text="@string/main_button_label_fixedmenu"
         android:padding="18dp"
@@ -67,6 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
 
         android:text="@string/main_button_label_dynamicmenu"
         android:padding="18dp"
